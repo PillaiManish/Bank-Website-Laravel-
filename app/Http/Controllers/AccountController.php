@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\RegisterRequest,App\Http\Requests\LoginRequest,App\Http\Requests\ChangePasswordRequest,App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\RegisterRequest,App\Http\Requests\LoginRequest,App\Http\Requests\ChangePasswordRequest,App\Http\Requests\ForgotPasswordRequest,App\Http\Requests\ForgotPasswordEmailRequest;
 use App\Models\User;
 use App\Mail\AccountVerfiyMail,App\Mail\PasswordChangeMail,App\Mail\ForgotPasswordMail;
 use Hash,Auth,Mail;
@@ -89,10 +89,8 @@ class AccountController extends Controller
     }
 
     // Post Request on Forgot Password Redirected from mail
-    public function postForgotPasswordEmail(ForgotPasswordRequestEmail $request){
-        
-
+    public function postForgotPasswordEmail(ForgotPasswordEmailRequest $request,$token){
+        User::where('id',decrypt($token))->update(['password'=>Hash::make('password')]);
+        return redirect('/login')->with('success','Your password has been reset, try login now');
     }
-
-
 }
