@@ -41,7 +41,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name'=>'bail|required|alpha',
-            'password'=>'bail|required|confirmed|min:8',
+            'password'=>'bail|required|min:8',
             'confirmpassword'=>'bail|required|min:8|same:password',
             'email'=>'bail|required|email|unique:users',
         ];
