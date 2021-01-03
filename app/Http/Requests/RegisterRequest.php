@@ -21,11 +21,28 @@ class RegisterRequest extends FormRequest
      *
      * @return array
      */
+
+
+    public function messages()
+    {
+        return [
+            'confirmpassword.same' => 'Password & Confirm Password field must be same, please try again',
+        ];
+    }   
+
+    public function attributes(){
+        return [
+            'password' => 'Password',
+            'confirmpassword'=>'Confirm Password'
+        ];
+    }
+
     public function rules()
     {
         return [
             'name'=>'bail|required|alpha',
             'password'=>'bail|required|confirmed|min:8',
+            'confirmpassword'=>'bail|required|min:8|same:password',
             'email'=>'bail|required|email|unique:users',
         ];
     }
